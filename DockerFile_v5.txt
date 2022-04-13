@@ -1,0 +1,21 @@
+FROM ml_platform.yandex/user-default
+ENV DEBIAN_FRONTEND noninteractive
+# tesseract_unoconv_stanza_spacy_pdf2image
+# DataSphere requires Python 3.7 and PIP
+RUN\
+ apt-get update &&\
+ apt-get install -y --no-install-recommends apt-utils &&\
+ apt-get install -y build-essential curl software-properties-common &&\
+ add-apt-repository ppa:deadsnakes/ppa &&\
+ apt-get update &&\
+ apt-get install -y python3.7-dev python3-virtualenv &&\
+ curl 'https://bootstrap.pypa.io/get-pip.py' | python3.7 &&\
+ add-apt-repository -y ppa:libreoffice/ppa &&\
+ apt-get -y install unoconv &&\
+ apt-get -y install poppler-utils &&\
+ pip install webcolors poppler-utils temp pathlib opencv-python regex pillow &&\
+ pip install pdf2image spacy stanza pytesseract textract fitz &&\
+ pip install --upgrade --force-reinstall pymupdf &&\
+ apt-get install -y --install-recommends python-dev tesseract-ocr-rus libtesseract-dev &&\
+ exit
+ 
